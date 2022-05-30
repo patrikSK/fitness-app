@@ -16,22 +16,6 @@ function checkNotAuthenticated(req: any, res: any, next: any) {
     next()
 }
 
-/*function isAdmin(req: any, res: any, next: any) {
-    if(req.user !== undefined){
-        req.user.then((result: any) => {
-            if (req.isAuthenticated() && result.dataValues.role == "ADMIN") {
-                next()
-            } else {
-                res.status(401).json({message: "you are not admin"})
-                //res.redirect('/auth')
-            }
-        }).catch((err: any) => {
-            console.log(err)
-        })
-    }
-    
-}*/
-
 async function isAdmin(req: any, res: any, next: any) {
     const user = await User.findOne({
         where: { id: req.session.passport.user}

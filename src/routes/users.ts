@@ -3,13 +3,7 @@ import { isAdmin } from "../auth/isAuth"
 import { models } from '../db'
 
 const router: Router = Router()
-/*
-const session = require('express-session')
-const passport = require('passport')
-require('../auth/passport-config')
-router.use(passport.initialize())
-router.use(passport.session())
-*/
+
 const User = models.User
 
 export default () => {
