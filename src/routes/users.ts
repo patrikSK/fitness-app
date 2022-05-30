@@ -29,16 +29,16 @@ export default () => {
 		})
 	})
 
-    router.put("/update/:id", isAdmin, (_req: Request, res: Response, _next: NextFunction) => {
-		const id = _req.params.id
-		console.log(_req.session)
+    router.put("/update/:id", isAdmin, (req: any, res: Response, _next: NextFunction) => {
+		const id = req.params.id
+		
 		User.update(
 			{
-				name: _req.body.name,
-                surname: _req.body.surname,
-                nickName: _req.body.nickName,
-                age: _req.body.age,
-                role: _req.body.role
+				name: req.body.name,
+                surname: req.body.surname,
+                nickName: req.body.nickName,
+                age: req.body.age,
+                role: req.body.role
 			},
 			{
 				where: { id: id },

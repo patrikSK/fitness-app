@@ -1,64 +1,63 @@
-import {
-	Router,
-	Request,
-	Response,
-	NextFunction
-} from 'express'
-
+import { Router, Request, Response, NextFunction } from 'express'
 import { models } from '../db'
-
+import { checkAuthenticated } from '../auth/isAuth'
 const router: Router = Router()
-
 const User = models.User
 
 export default () => {
     //API for User
-	router.get('/allUsers', async (_req: Request, res: Response, _next: NextFunction) => {
-		const users = await User.findAll()
-		console.log(_req.session)
+	router.get('/allUsers', checkAuthenticated, async (_req: Request, res: Response, _next: NextFunction) => {
+		const users = await User.findAll({
+			attributes: ['id', 'nickName']
+		})
+		console.log(users)
 		return res.json({
 			data: {
-                id: users.id,
-                nickName: users.nickName
+                users
             },
 			message: 'List of all users'
 		})
+	})
+
+    router.get(`/profile/:id`, checkAuthenticated, async (req: any, res: Response, _next: NextFunction) => {
+        const id = req.params.id
 		
+		if(id === req.session.passport.user){
+			const user = await User.findOne({
+				where: { id: id }
+			})
+	
+			return res.json({
+				data: {
+					name: user.name,
+					surname: user.surname,
+					age: user.age,
+					nickName: user.nickName
+				},
+				message: `User with id: ${id}`
+			})
+		} else {
+			res.status(401).json({message: "this is not your profile"})
+		}
 	})
 
-    router.get('/profile/:id', async (_req: Request, res: Response, _next: NextFunction) => {
-        const id = _req.params.id
+    router.put("/update/:id", checkAuthenticated, async (req: any, res: Response, _next: NextFunction) => {
+		const id = req.params.id
 
-		const user = await User.findOne({
-            where: { id: id }
-        })
-
-		return res.json({
-			data: {
-                name: user.name,
-                surname: user.surname,
-                age: user.age,
-                nickName: user.nickName
-            },
-			message: `User with id: ${id}`
-		})
-	})
-
-    router.put("/update/:id", async (_req: Request, res: Response, _next: NextFunction) => {
-		const id = _req.params.id
-
-		User.update(
-			{
-				name: _req.body.name,
-                surname: _req.body.surname,
-                nickName: _req.body.nickName,
-                age: _req.body.age,
-                role: _req.body.role
-			},
-			{
-				where: { id: id },
-			}
-    	)
+		if(id === req.session.passport.user){
+			User.update(
+				{
+					name: req.body.name,
+					surname: req.body.surname,
+					nickName: req.body.nickName,
+					age: req.body.age,
+					role: req.body.role
+				},
+				{
+					where: { id: id },
+				}
+			)
+		}
 	})
     
 	return router

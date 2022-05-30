@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt")
 const passport = require("passport")
 const flash = require("express-flash")
 const methodOverride = require('method-override')
-import {checkAuthenticated, checkNotAuthenticated, isAdmin} from "./isAuth"
+import {checkAuthenticated, checkNotAuthenticated} from "./isAuth"
 import initializePassport from './passport-config'
 initializePassport(passport, getUserByEmail, getUserById)
 

@@ -63,3 +63,17 @@ Content-Type: application/json
 
 ###
 
+###
+
+PUT http://localhost:8000/user/update/4
+Content-Type: application/json
+
+{
+    "name": "w",
+    "surname": "w",
+    "nickName": "wwwooowww",
+    "age": "22",
+    "role": "USER"
+}
+
+###

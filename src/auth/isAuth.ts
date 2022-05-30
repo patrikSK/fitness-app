@@ -3,10 +3,10 @@ const User = models.User
 
 function checkAuthenticated(req: any, res: any, next: any) {
     if (req.isAuthenticated()) {
-      return next()
+      next()
+    } else {
+        res.redirect('/auth/login')
     }
-  
-    res.redirect('/auth/login')
 }
 
 function checkNotAuthenticated(req: any, res: any, next: any) {
@@ -20,6 +20,7 @@ async function isAdmin(req: any, res: any, next: any) {
     const user = await User.findOne({
         where: { id: req.session.passport.user}
     })
+    console.log(user)
     if(req.isAuthenticated() && user.role == "ADMIN") {
         next()
     } else {
