@@ -1,0 +1,65 @@
+POST http://localhost:8000/auth/signup
+Content-Type: application/json
+
+{
+    "email": "pedrddo@email.email",
+    "password": "k"
+}
+
+
+###
+
+POST http://localhost:8000/exercises/add
+Content-Type: application/json
+
+{
+    "difficulty": "EASY",
+    "name": "Exercise 555",
+    "programID": 1
+}
+
+###
+
+PUT http://localhost:8000/exercises/update/7
+Content-Type: application/json
+
+{
+    "difficulty": "HARD",
+    "name": "Exercise 200",
+    "programID": 1
+}
+
+###
+
+DELETE http://localhost:8000/exercises/remove/8
+
+###
+
+POST http://localhost:8000/exercises/addToProgram/3
+Content-Type: application/json
+
+{
+    "difficulty": "EASY",
+    "name": "Exercise 1",
+    "programID": 3
+}
+
+###
+
+DELETE http://localhost:8000/exercises/removeFromProgram/1/9
+
+###
+
+PUT http://localhost:8000/users/update/6
+Content-Type: application/json
+
+{
+    "name": "Filip",
+    "surname": "prechadzka",
+    "nickName": "stolicka132",
+    "age": "40",
+    "role": "USER"
+}
+
+###
+
