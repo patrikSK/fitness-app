@@ -1,5 +1,8 @@
-# rsa keys
-*.pem
+# vscode config
+.vscode/
+
+#env file
+*.env
 
 # Node artifact files
 node_modules/

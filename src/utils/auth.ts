@@ -1,15 +1,6 @@
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
-import fs from "fs";
-import path from "path";
 import jwt_decode from "jwt-decode";
-
-const pathToKey = path.join(__dirname, "..", "id_rsa_priv.pem");
-const PRIV_KEY = fs.readFileSync(pathToKey, "utf8");
-
-/**
- * -------------- HELPER FUNCTIONS ----------------
- */
 
 /**
  *
@@ -43,7 +34,7 @@ const issueJWT = (user: any) => {
     iat: Date.now(),
   };
 
-  const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, {
+  const signedToken = jsonwebtoken.sign(payload, process.env.PRIV_KEY, {
     expiresIn: expiresIn,
     algorithm: "RS256",
   });
@@ -61,8 +52,8 @@ const issueJWT = (user: any) => {
  * This function decrypts Bearer token sended from user and extract the user ID
  */
 const getIdFromToken = (bearer: string) => {
-  let token: string = bearer.split(" ")[1];
-  let decoded: string = jwt_decode(token);
+  let token = bearer.split(" ")[1];
+  let decoded = jwt_decode(token);
   return decoded.sub;
 };
 

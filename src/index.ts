@@ -1,3 +1,5 @@
+import * as dotEnv from "dotenv";
+dotEnv.config();
 import http from "http";
 import express from "express";
 import { sequelize } from "./db";
@@ -18,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+// router
 app.use("/programs", ProgramRouter());
 app.use("/exercises", ExerciseRouter());
 app.use("/users", UserRouter());
@@ -27,11 +30,12 @@ app.use("/auth", auth());
 const httpServer = http.createServer(app);
 
 sequelize.sync();
-
 console.log("Sync database", "postgresql://localhost:5432/fitness_app");
 
 httpServer
-  .listen(8000)
-  .on("listening", () => console.log(`Server started at port ${8000}`));
+  .listen(process.env.PORT)
+  .on("listening", () =>
+    console.log(`Server started at port ${process.env.PORT}`)
+  );
 
 export default httpServer;
