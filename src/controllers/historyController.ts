@@ -1,0 +1,71 @@
+import { Request, Response } from "express";
+import { models } from "../db";
+import { getIdFromToken } from "../utils/auth";
+
+const { History } = models;
+
+const getCompletedExercises = async (_req: Request, res: Response) => {
+    const id = getIdFromToken(_req.headers.authorization);
+
+    try {
+        const records = await History.findAll({
+            where: { userId: id },
+        });
+
+        return res.status(200).json({
+            success: true,
+            data: {
+                records: records,
+            },
+            message: "List of all completed exercises",
+        });
+    } catch (err) {
+        return res.status(400).json({ success: false, error: err });
+    }
+};
+
+const addCompletedExercise = async (_req: Request, res: Response) => {
+    const id = getIdFromToken(_req.headers.authorization);
+
+    try {
+        const exercise = await History.create({
+            weight: _req.body.weight,
+            reps: _req.body.reps,
+            exerciseName: _req.body.exerciseName,
+            exerciseId: _req.body.exerciseId,
+            userId: id,
+        });
+        return res.status(200).json({
+            success: true,
+            exercise: exercise,
+            message: "exercise was succesfully saved to history",
+        });
+    } catch (err) {
+        return res.status(400).json({ success: false, error: err });
+    }
+};
+
+const removeExerciseFromHistory = async (_req: Request, res: Response) => {
+    const id = _req.params.id;
+
+    try {
+        await History.destroy({
+            where: {
+                id: id,
+            },
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: "Exercise was successfully removed from history",
+        });
+    } catch (err) {
+        return res.status(400).json({ success: false, error: err });
+    }
+};
+
+export {
+    getCompletedExercises,
+    addCompletedExercise,
+    removeExerciseFromHistory,
+};

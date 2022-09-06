@@ -1,54 +1,42 @@
-require("dotenv").config()
-if(process.env.NODE_ENV !== "production") { require("dotenv").config() }
+require("dotenv").config();
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
 
-import http from 'http'
-import express from 'express'
-import * as bodyParser from 'body-parser'
-import { sequelize } from './db'
-import ProgramRouter from './routes/programs'
-import ExerciseRouter from './routes/exercises'
-import UsersRouter from "./routes/users"
-import UserRouter from "./routes/user"
-import auth from './auth/index'
-const session = require('express-session')
-const SessionStore = require('express-session-sequelize')(session.Store);
-const passport = require('passport')
-const app = express()
+import http from "http";
+import express from "express";
+import { sequelize } from "./db";
+import passport from "passport";
+import passportConfig from "./config/passport";
 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
-app.set("view engine", "ejs")
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 1 month
-    },
-    store: new SessionStore({
-        db: sequelize,
-        table: 'Session',
-     }),
-}))
+import ProgramRouter from "./routes/programs";
+import HistoryRouter from "./routes/history";
+import ExerciseRouter from "./routes/exercises";
+import UserRouter from "./routes/user";
+import auth from "./routes/auth";
+import cors from "cors";
+const app = express();
 
-require('./auth/passport-config')
-app.use(passport.initialize())
-app.use(passport.session())
+passportConfig(passport);
+app.use(passport.initialize());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-app.use('/programs', ProgramRouter())
-app.use('/exercises', ExerciseRouter())
-app.use("/users", UsersRouter())
-app.use("/user", UserRouter())
-app.use("/auth", auth)
+app.use("/programs", ProgramRouter());
+app.use("/exercises", ExerciseRouter());
+app.use("/users", UserRouter());
+app.use("/history", HistoryRouter());
+app.use("/auth", auth);
 
+const httpServer = http.createServer(app);
 
-const httpServer = http.createServer(app)
+sequelize.sync();
 
-sequelize.sync()
+console.log("Sync database", "postgresql://localhost:5432/fitness_app");
 
-console.log('Sync database', 'postgresql://localhost:5432/fitness_app')
+httpServer
+    .listen(8000)
+    .on("listening", () => console.log(`Server started at port ${8000}`));
 
-
-httpServer.listen(8000).on('listening', () => console.log(`Server started at port ${8000}`))
-
-export default httpServer
+export default httpServer;

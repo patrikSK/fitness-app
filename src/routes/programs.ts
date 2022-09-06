@@ -1,26 +1,19 @@
 import {
-	Router,
-	Request,
-	Response,
-	NextFunction
-} from 'express'
+    getPrograms,
+    createProgram,
+    removeProgram,
+} from "../controllers/programsController";
+import { isAdmin, checkAuthenticated } from "../controllers/authController";
+import { Router } from "express";
 
-import { models } from '../db'
+const router: Router = Router();
 
-const router: Router = Router()
-
-const {
-	Program
-} = models
-
+//api for handle programs
 export default () => {
-	router.get('/', async (_req: Request, res: Response, _next: NextFunction) => {
-		const programs = await Program.findAll()
-		return res.json({
-			data: programs,
-			message: 'List of programs'
-		})
-	})
+    router
+        .get("/", getPrograms)
+        .post("/", checkAuthenticated, isAdmin, createProgram)
+        .delete("/:id", checkAuthenticated, isAdmin, removeProgram);
 
-	return router
-}
+    return router;
+};

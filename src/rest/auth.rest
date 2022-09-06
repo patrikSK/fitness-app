@@ -1,0 +1,22 @@
+POST http://localhost:8000/auth/register
+Content-Type: application/json
+
+{
+    "name": "w",
+    "surname": "w",
+    "nickName": "w",
+    "email": "w@w",
+    "password": "w",
+    "age": 5,
+    "role": "USER"
+}
+
+###
+
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+    "email": "q@q",
+    "password": "q"
+}

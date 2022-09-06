@@ -84,7 +84,7 @@ ADMIN can:
 - edit exercises in program (add or remove)
 - get all users and all its data
 - get user detail
-- update any user (name, surname, nickName, age, nickName, role)
+- update any user (name, surname, nickName, age, role)
 
 ## Task 3
 
