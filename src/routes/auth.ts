@@ -4,7 +4,5 @@ import handleLogin from "../controllers/loginController";
 
 const router: Router = Router();
 
-router.post("/login", handleLogin);
-router.post("/register", handleRegister);
-
-export default router;
+export default () =>
+  router.post("/login", handleLogin).post("/register", handleRegister);

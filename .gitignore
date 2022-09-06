@@ -1,3 +1,6 @@
+# rsa keys
+*.pem
+
 # Node artifact files
 node_modules/
 dist/

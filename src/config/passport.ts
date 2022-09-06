@@ -1,31 +1,26 @@
-const JwtStrategy = require('passport-jwt').Strategy
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const fs = require('fs');
-const path = require('path');
+import { Strategy } from "passport-jwt";
+import { ExtractJwt } from "passport-jwt";
+import fs from "fs";
+import path from "path";
 
-import { models } from '../db'
-const User = models.User
+import { models } from "../db";
+const { User } = models;
 
-const pathToKey = path.join(__dirname, '..', 'id_rsa_pub.pem')
-const PUB_KEY = fs.readFileSync(pathToKey, 'utf8')
+const pathToKey: string = path.join(__dirname, "..", "id_rsa_pub.pem");
+const PUB_KEY: string = fs.readFileSync(pathToKey, "utf8");
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: PUB_KEY,
-  algorithms: ['RS256']
-}
+  algorithms: ["RS256"],
+};
 
-const strategy: any = new JwtStrategy(options, (payload: any, done: any) => {
-    User.findOne({ where: {id: payload.sub} })
-        .then((user: any) => {
-            if(user) {
-                return done(null, user)
-            }
-            else return done(null, false)
-        })
-        .catch((err: any) => done(err, null))
-})
+const strategy: any = new Strategy(options, (payload: any, done: any) => {
+  User.findOne({ where: { id: payload.sub } })
+    .then((user: any) => (user ? done(null, user) : done(null, false)))
+    .catch((err: any) => done(err, null));
+});
 
 export default (passport: any) => {
-    passport.use(strategy)
-}
+  passport.use(strategy);
+};

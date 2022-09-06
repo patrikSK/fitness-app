@@ -1,8 +1,3 @@
-require("dotenv").config();
-if (process.env.NODE_ENV !== "production") {
-    require("dotenv").config();
-}
-
 import http from "http";
 import express from "express";
 import { sequelize } from "./db";
@@ -27,7 +22,7 @@ app.use("/programs", ProgramRouter());
 app.use("/exercises", ExerciseRouter());
 app.use("/users", UserRouter());
 app.use("/history", HistoryRouter());
-app.use("/auth", auth);
+app.use("/auth", auth());
 
 const httpServer = http.createServer(app);
 
@@ -36,7 +31,7 @@ sequelize.sync();
 console.log("Sync database", "postgresql://localhost:5432/fitness_app");
 
 httpServer
-    .listen(8000)
-    .on("listening", () => console.log(`Server started at port ${8000}`));
+  .listen(8000)
+  .on("listening", () => console.log(`Server started at port ${8000}`));
 
 export default httpServer;
