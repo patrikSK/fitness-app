@@ -10,15 +10,10 @@ export default async (_req: Request, res: Response) => {
   });
 
   if (!user) {
-    return res
-      .status(401)
-      .json({ success: false, message: "could not find user" });
+    return res.status(401).json({ success: false, message: "could not find user" });
   }
 
-  const passwordIsValid: boolean = await validPassword(
-    _req.body.password,
-    user.password
-  );
+  const passwordIsValid = await validPassword(_req.body.password, user.password);
 
   if (!passwordIsValid) {
     return res
@@ -26,7 +21,7 @@ export default async (_req: Request, res: Response) => {
       .json({ success: false, message: "you entered wrong password" });
   }
 
-  const tokenObject = issueJWT(user);
+  const tokenObject = issueJWT(user.id);
   res.status(200).json({
     success: true,
     token: tokenObject.token,

@@ -2,11 +2,13 @@ import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import jwt_decode from "jwt-decode";
 
+type Payload = {
+  sub: string;
+  iat: number;
+  exp: number;
+};
+
 /**
- *
- * @param {*} password - The plain text password
- * @param {*} hashedPassword - The hashed password stored in the database
- *
  * This function uses the bcrypt library to decrypt the hashed password and then compares
  * the decrypted password with the password that the user provided at login
  */
@@ -14,18 +16,15 @@ const validPassword = (password: string, hashedPassword: string) =>
   bcrypt.compare(password, hashedPassword);
 
 /**
- *
- * @param {*} password - The password string that the user inputs to the password field in the register form
- *
  * This function takes a plain text password and creates a hashed password
  */
 const genPassword = (password: string) => bcrypt.hash(password, 10);
 
 /**
- * @param {*} user - The user object.  We need this to set the JWT `sub` payload property to the database user ID
+ * This function creates new bearer token and return it with expiration date
  */
-const issueJWT = (user: any) => {
-  const id = user.id;
+const issueJWT = (userId: string | number) => {
+  const id = userId;
 
   const expiresIn = "1d";
 
@@ -46,15 +45,12 @@ const issueJWT = (user: any) => {
 };
 
 /**
- *
- * @param {*} bearer - the Bearer token sended from client
- *
  * This function decrypts Bearer token sended from user and extract the user ID
  */
 const getIdFromToken = (bearer: string) => {
   let token = bearer.split(" ")[1];
-  let decoded = jwt_decode(token);
-  return decoded.sub;
+  let decodedToken = jwt_decode(token) as Payload;
+  return decodedToken.sub;
 };
 
 export { validPassword, genPassword, issueJWT, getIdFromToken };
