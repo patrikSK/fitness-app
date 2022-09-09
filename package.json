@@ -8,7 +8,7 @@
     "start": "cross-env TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true node -r ts-node/register src/index.ts",
     "seed": "cross-env TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true node -r ts-node/register src/seed.ts"
   },
-  "author": "richard.solar@goodrequest.com",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/body-parser": "1.19.0",
