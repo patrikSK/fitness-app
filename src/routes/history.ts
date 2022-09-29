@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { checkAuthenticated } from "../controllers/authController";
 import {
-  getAllExerciseRecords,
+  getOneExerciseRecords,
   getDates,
   addCompletedExercise,
   removeExerciseFromHistory,
@@ -13,7 +13,7 @@ const router: Router = Router();
 export default () =>
   router
     .get("/dates", checkAuthenticated, getDates)
-    .get("/:date", checkAuthenticated, getExercisesFromOneDay)
-    .get("/:exerciseId", checkAuthenticated, getAllExerciseRecords)
+    .get("/exercises/:date", checkAuthenticated, getExercisesFromOneDay)
+    .get("/exercise/:exerciseId", checkAuthenticated, getOneExerciseRecords)
     .post("/", checkAuthenticated, addCompletedExercise)
     .delete("/:id", checkAuthenticated, removeExerciseFromHistory);

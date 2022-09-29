@@ -5,7 +5,7 @@ import sequelize from "sequelize";
 
 const { History } = models;
 
-const getAllExerciseRecords = async (_req: Request, res: Response) => {
+const getOneExerciseRecords = async (_req: Request, res: Response) => {
   const id = getIdFromToken(_req.headers.authorization);
   const exerciseId = _req.params.exerciseId;
   try {
@@ -113,7 +113,7 @@ const removeExerciseFromHistory = async (_req: Request, res: Response) => {
 };
 
 export {
-  getAllExerciseRecords,
+  getOneExerciseRecords,
   addCompletedExercise,
   removeExerciseFromHistory,
   getDates,
