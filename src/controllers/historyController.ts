@@ -16,7 +16,7 @@ const getOneExerciseRecords = async (_req: Request, res: Response) => {
     return res.status(200).json({
       success: true,
       data: {
-        exerciseRecords: records,
+        oneExerciseRecords: records,
       },
       message: "List of all records of one exercise",
     });
