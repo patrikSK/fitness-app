@@ -1,24 +1,24 @@
 import { Request, Response } from "express";
-import { Sequelize } from "sequelize/types";
 import { models } from "../db";
 import { getIdFromToken } from "../utils/auth";
+import sequelize from "sequelize";
 
 const { History } = models;
 
-const getCompletedExercises = async (_req: Request, res: Response) => {
+const getAllExerciseRecords = async (_req: Request, res: Response) => {
   const id = getIdFromToken(_req.headers.authorization);
-
+  const exerciseId = _req.params.exerciseId;
   try {
     const records = await History.findAll({
-      where: { userId: id },
+      where: { userId: id, exerciseId: exerciseId },
     });
 
     return res.status(200).json({
       success: true,
       data: {
-        records: records,
+        exerciseRecords: records,
       },
-      message: "List of all completed exercises",
+      message: "List of all records of one exercise",
     });
   } catch (err) {
     return res.status(400).json({ success: false, error: err });
@@ -53,9 +53,11 @@ const getExercisesFromOneDay = async (_req: Request, res: Response) => {
 
   try {
     const exercises = await History.findAll({
-      attributes: ["exerciseId", "exerciseName"],
+      attributes: [
+        [sequelize.fn("DISTINCT", sequelize.col("exerciseId")), "exerciseId"],
+        "exerciseName",
+      ],
       where: { userId: id, date: date },
-      group: ["exerciseId"],
     });
 
     return res.status(200).json({
@@ -111,7 +113,7 @@ const removeExerciseFromHistory = async (_req: Request, res: Response) => {
 };
 
 export {
-  getCompletedExercises,
+  getAllExerciseRecords,
   addCompletedExercise,
   removeExerciseFromHistory,
   getDates,

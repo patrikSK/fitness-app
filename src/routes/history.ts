@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { checkAuthenticated } from "../controllers/authController";
 import {
-  getCompletedExercises,
+  getAllExerciseRecords,
   getDates,
   addCompletedExercise,
   removeExerciseFromHistory,
@@ -14,6 +14,6 @@ export default () =>
   router
     .get("/dates", checkAuthenticated, getDates)
     .get("/:date", checkAuthenticated, getExercisesFromOneDay)
-    .get("/", checkAuthenticated, getCompletedExercises)
+    .get("/:exerciseId", checkAuthenticated, getAllExerciseRecords)
     .post("/", checkAuthenticated, addCompletedExercise)
     .delete("/:id", checkAuthenticated, removeExerciseFromHistory);
