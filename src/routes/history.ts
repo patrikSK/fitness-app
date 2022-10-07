@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { checkAuthenticated } from "../controllers/authController";
 import {
+  getAllRecords,
   getOneExerciseRecords,
   getDates,
   addCompletedExercise,
@@ -12,6 +13,7 @@ const router: Router = Router();
 
 export default () =>
   router
+    .get("/allRecords", checkAuthenticated, getAllRecords)
     .get("/dates", checkAuthenticated, getDates)
     .get("/exercises/:date", checkAuthenticated, getExercisesFromOneDay)
     .get("/exercise/:exerciseId", checkAuthenticated, getOneExerciseRecords)

@@ -5,6 +5,26 @@ import sequelize from "sequelize";
 
 const { History } = models;
 
+const getAllRecords = async (_req: Request, res: Response) => {
+  const id = getIdFromToken(_req.headers.authorization);
+
+  try {
+    const records = await History.findAll({
+      where: { userId: id },
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        oneExerciseRecords: records,
+      },
+      message: "List of all records",
+    });
+  } catch (err) {
+    return res.status(400).json({ success: false, error: err });
+  }
+};
+
 const getOneExerciseRecords = async (_req: Request, res: Response) => {
   const id = getIdFromToken(_req.headers.authorization);
   const exerciseId = _req.params.exerciseId;
@@ -113,6 +133,7 @@ const removeExerciseFromHistory = async (_req: Request, res: Response) => {
 };
 
 export {
+  getAllRecords,
   getOneExerciseRecords,
   addCompletedExercise,
   removeExerciseFromHistory,
