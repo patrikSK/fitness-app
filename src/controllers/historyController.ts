@@ -16,7 +16,7 @@ const getAllRecords = async (_req: Request, res: Response) => {
     return res.status(200).json({
       success: true,
       data: {
-        oneExerciseRecords: records,
+        allRecords: records,
       },
       message: "List of all records",
     });
