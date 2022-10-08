@@ -22,7 +22,7 @@ export default async (_req: Request, res: Response) => {
   }
 
   const tokenObject = issueJWT(user.id);
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     token: tokenObject.token,
     role: user.role,

@@ -13,12 +13,12 @@ import UserRouter from "./routes/user";
 import auth from "./routes/auth";
 import cors from "cors";
 const app = express();
+app.use(cors());
 
 passportConfig(passport);
 app.use(passport.initialize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 
 // router
 app.use("/programs", ProgramRouter());
