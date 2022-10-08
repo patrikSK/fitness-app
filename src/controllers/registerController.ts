@@ -26,7 +26,7 @@ export default async (_req: Request, res: Response) => {
       email: _req.body.email,
       password: hashPassword,
       age: _req.body.age,
-      role: "USER",
+      role: _req.body.role,
     });
     res.status(200).json({
       success: true,
