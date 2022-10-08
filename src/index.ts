@@ -13,7 +13,23 @@ import UserRouter from "./routes/user";
 import auth from "./routes/auth";
 import cors from "cors";
 const app = express();
-app.use(cors());
+
+// enable cors
+app.use(
+  cors({
+    origin: true,
+    optionsSuccessStatus: 200,
+    credentials: true,
+  })
+);
+app.options(
+  "*",
+  cors({
+    origin: true,
+    optionsSuccessStatus: 200,
+    credentials: true,
+  })
+);
 
 passportConfig(passport);
 app.use(passport.initialize());
