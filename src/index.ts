@@ -30,12 +30,9 @@ app.use("/auth", auth());
 const httpServer = http.createServer(app);
 
 sequelize.sync();
-console.log("Sync database", "postgresql://localhost:5432/fitness_app");
 
 httpServer
   .listen(process.env.PORT)
-  .on("listening", () =>
-    console.log(`Server started at port ${process.env.PORT}`)
-  );
+  .on("listening", () => console.log(`Server started at port ${process.env.PORT}`));
 
 export default httpServer;
