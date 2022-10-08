@@ -4,7 +4,7 @@ import handleLogin from "../controllers/loginController";
 import cors from "cors";
 
 const corsOptions = {
-  origin: "https://fitness-app-luv3.onrender.com/",
+  origin: "https://my-fitness-app-api.onrender.com/auth/login",
   optionsSuccessStatus: 200,
 };
 
