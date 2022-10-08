@@ -20,6 +20,7 @@ app.use(
     origin: true,
     optionsSuccessStatus: 200,
     credentials: true,
+    exposedHeaders: "*",
   })
 );
 app.options(
@@ -28,6 +29,7 @@ app.options(
     origin: true,
     optionsSuccessStatus: 200,
     credentials: true,
+    exposedHeaders: "*",
   })
 );
 
