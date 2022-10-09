@@ -10,17 +10,19 @@ export default async (_req: Request, res: Response) => {
       where: { email: _req.body.email },
     });
 
+    const passwordIsValid = await validPassword(_req.body.password, user.password);
+
     if (!user) {
       return res.status(401).json({ success: false, message: "could not find user" });
     }
-
-    const passwordIsValid = await validPassword(_req.body.password, user.password);
 
     if (!passwordIsValid) {
       return res
         .status(401)
         .json({ success: false, message: "you entered wrong password" });
     }
+
+    return res.status(401).send("nejde");
 
     if (user && passwordIsValid) {
       /*const tokenObject = issueJWT(user.id);
@@ -36,7 +38,6 @@ export default async (_req: Request, res: Response) => {
         role: user.role,
         expiresIn: tokenObject.expires,
       });*/
-      res.status(200).send("vsetko ide");
     }
   } catch (err) {
     res.status(400).json({ success: false, message: "sequelize error", error: err });
