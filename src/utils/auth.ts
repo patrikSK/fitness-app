@@ -23,7 +23,7 @@ const genPassword = (password: string) => bcrypt.hash(password, 10);
 /**
  * This function creates new bearer token and return it with expiration date
  */
-const issueJWT = (userId: string | number) => {
+const issueJWT = async (userId: string | number) => {
   const id = userId;
 
   const expiresIn = "1d";
