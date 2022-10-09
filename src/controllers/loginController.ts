@@ -22,10 +22,13 @@ export default async (_req: Request, res: Response) => {
   }
 
   const tokenObject = issueJWT(user.id);
-  return res.status(200).json({
-    success: true,
-    token: tokenObject.token,
-    role: user.role,
-    expiresIn: tokenObject.expires,
-  });
+  res
+    .set("Access-Control-Allow-Origin", "https://fitness-app-luv3.onrender.com")
+    .status(200)
+    .json({
+      success: true,
+      token: tokenObject.token,
+      role: user.role,
+      expiresIn: tokenObject.expires,
+    });
 };
