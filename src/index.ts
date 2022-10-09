@@ -17,16 +17,7 @@ const app = express();
 // enable cors
 app.use(
   cors({
-    origin: "https://fitness-app-luv3.onrender.com",
-    optionsSuccessStatus: 200,
-    credentials: true,
-    exposedHeaders: "*",
-  })
-);
-app.options(
-  "*",
-  cors({
-    origin: "https://fitness-app-luv3.onrender.com",
+    origin: "*",
     optionsSuccessStatus: 200,
     credentials: true,
     exposedHeaders: "*",
