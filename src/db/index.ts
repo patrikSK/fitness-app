@@ -9,7 +9,12 @@ import defineProgram from "./program";
 import defineUser from "./user";
 import defineHistory from "./history";
 
-const sequelize: Sequelize = new Sequelize(process.env.DATABASE_INTERNAL_URI, {
+const uri =
+  process.env.NODE_ENV === "development"
+    ? process.env.DATABASE_URL
+    : process.env.DATABASE_INTERNAL_URI;
+
+const sequelize: Sequelize = new Sequelize(uri, {
   port: 5432,
   logging: false,
   dialect: "postgres",

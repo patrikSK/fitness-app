@@ -14,36 +14,19 @@ export default async (_req: Request, res: Response) => {
 
     if (!user) {
       return res.status(401).json({ success: false, message: "could not find user" });
-    }
-
-    if (!passwordIsValid) {
+    } else if (!passwordIsValid) {
       return res
         .status(401)
         .json({ success: false, message: "you entered wrong password" });
-    }
-
-    const tokenObject = await issueJWT(user.id);
-    return res.status(200).json({
-      success: true,
-      token: tokenObject.token,
-      role: user.role,
-      expiresIn: tokenObject.expires,
-    });
-
-    if (user && passwordIsValid) {
-      /*const tokenObject = issueJWT(user.id);
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With"
-      );
-      res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-      res.status(200).json({
+    } else {
+      const tokenObject = await issueJWT(user.id);
+      console.log(tokenObject);
+      return res.status(200).json({
         success: true,
         token: tokenObject.token,
         role: user.role,
         expiresIn: tokenObject.expires,
-      });*/
+      });
     }
   } catch (err) {
     res.status(400).json({ success: false, message: "sequelize error", error: err });
