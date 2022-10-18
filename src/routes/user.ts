@@ -14,6 +14,6 @@ export default () =>
   router
     .get("/user", checkAuthenticated, getUserData)
     .put("/user", checkAuthenticated, updateUserData)
-    .get("/allUsers", checkAuthenticated, isAdmin, getAllUsers)
+    .get("/allUsers", getAllUsers)
     .get("/:id", checkAuthenticated, isAdmin, getAllUserData)
     .put("/:id", checkAuthenticated, isAdmin, updateUserRole);
