@@ -20,7 +20,7 @@ export default async (_req: Request, res: Response) => {
         .json({ success: false, message: "you entered wrong password" });
     } else {
       const tokenObject = await issueJWT(user.id);
-      console.log(tokenObject);
+
       return res.status(200).json({
         success: true,
         token: tokenObject.token,
