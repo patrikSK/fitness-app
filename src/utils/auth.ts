@@ -38,8 +38,6 @@ const issueJWT = async (userId: string | number) => {
     algorithm: "RS256",
   });
 
-  console.log(process.env.PRIV_KEY.replace("\n", "\\n"));
-
   return {
     token: "Bearer " + signedToken,
     expires: expiresIn,
