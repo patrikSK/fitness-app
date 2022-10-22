@@ -6,12 +6,10 @@ const { User } = models;
 
 const getAllUsers = async (_req: Request, res: Response) => {
   try {
-    const users = await User.findAll();
-    /*
-        {
-            attributes: ["id", "nickName"],
-        }
-    */
+    const users = await User.findAll({
+      attributes: ["id", "nickName"],
+    });
+
     return res.status(200).json({
       success: true,
       data: users,
