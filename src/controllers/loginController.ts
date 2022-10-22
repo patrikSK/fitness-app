@@ -10,11 +10,12 @@ export default async (_req: Request, res: Response) => {
       where: { email: _req.body.email },
     });
 
-    const passwordIsValid = await validPassword(_req.body.password, user.password);
-
     if (!user) {
       return res.status(401).json({ success: false, message: "could not find user" });
-    } else if (!passwordIsValid) {
+    }
+
+    const passwordIsValid = await validPassword(_req.body.password, user.password);
+    if (!passwordIsValid) {
       return res
         .status(401)
         .json({ success: false, message: "you entered wrong password" });
