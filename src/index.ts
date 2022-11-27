@@ -11,6 +11,8 @@ import HistoryRouter from "./routes/history";
 import ExerciseRouter from "./routes/exercises";
 import UserRouter from "./routes/user";
 import auth from "./routes/auth";
+import workout from "./routes/workout";
+
 import cors from "cors";
 const app = express();
 
@@ -35,6 +37,7 @@ app.use("/exercises", ExerciseRouter());
 app.use("/users", UserRouter());
 app.use("/history", HistoryRouter());
 app.use("/auth", auth());
+app.use("/workout", workout());
 
 const httpServer = http.createServer(app);
 
