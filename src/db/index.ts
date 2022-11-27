@@ -8,6 +8,9 @@ import defineExercise from "./exercise";
 import defineProgram from "./program";
 import defineUser from "./user";
 import defineHistory from "./history";
+import defineWorkout from "./workout";
+import defineDays from "./day";
+import defineWorkoutExercise from "./workoutExercise";
 
 const uri =
   process.env.NODE_ENV === "development"
@@ -32,6 +35,12 @@ const modelsBuilder = (instance: Sequelize) => ({
   Program: instance.import(path.join(__dirname, "program"), defineProgram),
   User: instance.import(path.join(__dirname, "user"), defineUser),
   History: instance.import(path.join(__dirname, "history"), defineHistory),
+  Workout: instance.import(path.join(__dirname, "workout"), defineWorkout),
+  Day: instance.import(path.join(__dirname, "day"), defineDays),
+  WorkoutExercise: instance.import(
+    path.join(__dirname, "workoutExercise"),
+    defineWorkoutExercise
+  ),
 });
 
 const models = modelsBuilder(sequelize);
