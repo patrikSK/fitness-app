@@ -51,24 +51,6 @@ const createWorkout = async (_req: Request, res: Response) => {
   }
 };
 
-const removeWorkout = async (_req: Request, res: Response) => {
-  const id = _req.params.id;
-  try {
-    await Workout.destroy({
-      where: {
-        id: id,
-      },
-    });
-
-    return res.status(200).json({
-      success: true,
-      message: "workout was successfully removed",
-    });
-  } catch (err) {
-    return res.json({ success: false, error: err });
-  }
-};
-
 const updateWorkout = async (_req: Request, res: Response) => {
   const id = _req.params.id;
 
@@ -91,4 +73,22 @@ const updateWorkout = async (_req: Request, res: Response) => {
   }
 };
 
-export { getWorkouts, createWorkout, removeWorkout, updateWorkout };
+const removeWorkout = async (_req: Request, res: Response) => {
+  const id = _req.params.id;
+  try {
+    await Workout.destroy({
+      where: {
+        id: id,
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "workout was successfully removed",
+    });
+  } catch (err) {
+    return res.json({ success: false, error: err });
+  }
+};
+
+export { getWorkouts, createWorkout, updateWorkout, removeWorkout };
