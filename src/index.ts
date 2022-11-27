@@ -37,7 +37,7 @@ app.use("/exercises", ExerciseRouter());
 app.use("/users", UserRouter());
 app.use("/history", HistoryRouter());
 app.use("/auth", auth());
-app.use("/workout", workout());
+app.use("/workouts", workout());
 
 const httpServer = http.createServer(app);
 
