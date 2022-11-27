@@ -45,5 +45,14 @@ export default (sequelize: Sequelize) => {
     });
   };
 
+  WorkoutModel.associate = (models) => {
+    (WorkoutModel as any).belongsTo(models.User, {
+      foreignKey: {
+        name: "userID",
+        allowNull: false,
+      },
+    });
+  };
+
   return WorkoutModel;
 };

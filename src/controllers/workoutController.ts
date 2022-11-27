@@ -1,11 +1,18 @@
 import { Request, Response } from "express";
 import { models } from "../db";
+import { getIdFromToken } from "../utils/auth";
 
 const { Workout, Day } = models;
 
 const getWorkouts = async (_req: Request, res: Response) => {
+  const id = getIdFromToken(_req.headers.authorization);
+
   try {
-    const workouts = await Workout.findAll();
+    const workouts = await Workout.findAll({
+      where: {
+        id: id,
+      },
+    });
 
     return res.status(200).json({
       success: true,
@@ -18,10 +25,13 @@ const getWorkouts = async (_req: Request, res: Response) => {
 };
 
 const createWorkout = async (_req: Request, res: Response) => {
+  const id = getIdFromToken(_req.headers.authorization);
+
   try {
     const workout = await Workout.create({
       name: _req.body.name,
       days: _req.body.days,
+      userID: id,
     });
 
     for (let i = 0; i < _req.body.days; i++) {
