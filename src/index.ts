@@ -6,7 +6,7 @@ import { sequelize } from "./db";
 import passport from "passport";
 import passportConfig from "./config/passport";
 
-import ProgramRouter from "./routes/programs";
+import BodyPartRouter from "./routes/bodyPart";
 import HistoryRouter from "./routes/history";
 import ExerciseRouter from "./routes/exercises";
 import UserRouter from "./routes/user";
@@ -32,7 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // router
-app.use("/programs", ProgramRouter());
+app.use("/bodyParts", BodyPartRouter());
 app.use("/exercises", ExerciseRouter());
 app.use("/users", UserRouter());
 app.use("/history", HistoryRouter());

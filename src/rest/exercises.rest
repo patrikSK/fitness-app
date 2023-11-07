@@ -3,7 +3,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8000/exercises?programID=2
+GET http://localhost:8000/exercises?bodyPartID=2
 Content-Type: application/json
 
 ###
@@ -25,7 +25,7 @@ Content-Type: application/json
 {
     "difficulty": "EASY",
     "name": "Exercise 39",
-    "programID": 1
+    "bodyPartID": 1
 }
 
 ###
@@ -37,7 +37,7 @@ Content-Type: application/json
 {
     "difficulty": "HARD",
     "name": "skakanie",
-    "programID": 1
+    "bodyPartID": 1
 }
 
 ###

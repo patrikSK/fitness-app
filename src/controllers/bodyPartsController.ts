@@ -1,41 +1,41 @@
 import { Request, Response } from "express";
 import { models } from "../db";
 
-const { Program } = models;
+const { BodyPart } = models;
 
-const getPrograms = async (_req: Request, res: Response) => {
+const getBodyParts = async (_req: Request, res: Response) => {
   try {
-    const programs = await Program.findAll();
+    const bodyParts = await BodyPart.findAll();
     return res.status(200).json({
       success: true,
-      data: programs,
-      message: "List of programs",
+      data: bodyParts,
+      message: "List of bodyParts",
     });
   } catch (err) {
     return res.json({ success: false, error: err });
   }
 };
 
-const createProgram = async (_req: Request, res: Response) => {
+const createBodyPart = async (_req: Request, res: Response) => {
   try {
-    const program = await Program.create({
+    const bodyPart = await BodyPart.create({
       name: _req.body.name,
     });
 
     return res.status(200).json({
       success: true,
-      program: program,
-      message: "program was successfully created",
+      bodyPart: bodyPart,
+      message: "bodyPart was successfully created",
     });
   } catch (err) {
     return res.json({ success: false, error: err });
   }
 };
 
-const removeProgram = async (_req: Request, res: Response) => {
+const removeBodyPart = async (_req: Request, res: Response) => {
   const id = _req.params.id;
   try {
-    await Program.destroy({
+    await BodyPart.destroy({
       where: {
         id: id,
       },
@@ -43,11 +43,11 @@ const removeProgram = async (_req: Request, res: Response) => {
 
     return res.status(200).json({
       success: true,
-      message: "program was successfully removed",
+      message: "bodyPart was successfully removed",
     });
   } catch (err) {
     return res.json({ success: false, error: err });
   }
 };
 
-export { getPrograms, createProgram, removeProgram };
+export { getBodyParts, createBodyPart, removeBodyPart };

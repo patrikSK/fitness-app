@@ -5,7 +5,7 @@ import fs from "fs";
 import { Sequelize } from "sequelize";
 
 import defineExercise from "./exercise";
-import defineProgram from "./program";
+import defineBodyPart from "./bodyPart";
 import defineUser from "./user";
 import defineHistory from "./history";
 import defineWorkout from "./workout";
@@ -32,7 +32,7 @@ sequelize
 const modelsBuilder = (instance: Sequelize) => ({
   // Import models to sequelize
   Exercise: instance.import(path.join(__dirname, "exercise"), defineExercise),
-  Program: instance.import(path.join(__dirname, "program"), defineProgram),
+  BodyPart: instance.import(path.join(__dirname, "bodyPart"), defineBodyPart),
   User: instance.import(path.join(__dirname, "user"), defineUser),
   History: instance.import(path.join(__dirname, "history"), defineHistory),
   Workout: instance.import(path.join(__dirname, "workout"), defineWorkout),
