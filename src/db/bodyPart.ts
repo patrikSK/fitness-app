@@ -2,15 +2,10 @@
 
 import { Sequelize, DataTypes } from "sequelize";
 import { DatabaseModel } from "../types/db";
-import { EXERCISE_DIFFICULTY } from "../utils/enums";
-import { ExerciseModel } from "./exercise";
 
 export class BodyPartModel extends DatabaseModel {
   id: number;
-  difficulty: EXERCISE_DIFFICULTY;
   name: String;
-
-  exercises: ExerciseModel[];
 }
 
 export default (sequelize: Sequelize) => {
@@ -23,7 +18,7 @@ export default (sequelize: Sequelize) => {
         autoIncrement: true,
       },
       name: {
-        type: DataTypes.STRING(200),
+        type: DataTypes.STRING(255),
       },
     },
     {
