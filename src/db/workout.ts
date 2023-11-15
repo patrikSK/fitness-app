@@ -6,7 +6,9 @@ import { DatabaseModel } from "../types/db";
 export class WorkoutModel extends DatabaseModel {
   id: Number;
   name: String;
-  days: Number;
+  numOfDays: Number;
+
+  createdByUser: Number;
 }
 
 export default (sequelize: Sequelize) => {
@@ -19,10 +21,10 @@ export default (sequelize: Sequelize) => {
         autoIncrement: true,
       },
       name: {
-        type: DataTypes.STRING(200),
+        type: DataTypes.STRING(255),
         allowNull: true,
       },
-      days: {
+      numOfDays: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -36,19 +38,9 @@ export default (sequelize: Sequelize) => {
   );
 
   WorkoutModel.associate = (models) => {
-    (WorkoutModel as any).hasMany(models.Day, {
+    WorkoutModel.hasMany(models.Day, {
       foreignKey: {
         name: "workoutID",
-        allowNull: false,
-      },
-      as: "translations",
-    });
-  };
-
-  WorkoutModel.associate = (models) => {
-    (WorkoutModel as any).belongsTo(models.User, {
-      foreignKey: {
-        name: "userID",
         allowNull: false,
       },
     });

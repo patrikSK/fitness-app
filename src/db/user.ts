@@ -6,12 +6,9 @@ import { ROLE } from "../utils/enums";
 
 export class UserModel extends DatabaseModel {
   id: Number;
-  name: String;
-  surname: String;
   nickName: String;
   email: String;
   password: String;
-  age: Number;
   role: ROLE;
 }
 
@@ -24,34 +21,22 @@ export default (sequelize: Sequelize) => {
         allowNull: false,
         autoIncrement: true,
       },
-      name: {
-        type: DataTypes.STRING(200),
-        allowNull: false,
-      },
-      surname: {
-        type: DataTypes.STRING(200),
-        allowNull: false,
-      },
       nickName: {
-        type: DataTypes.STRING(200),
+        type: DataTypes.STRING(255),
         allowNull: false,
         unique: true,
       },
       email: {
-        type: DataTypes.STRING(250),
+        type: DataTypes.STRING(255),
         allowNull: false,
         unique: true,
       },
       password: {
-        type: DataTypes.STRING(200),
-        allowNull: false,
-      },
-      age: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
       role: {
-        type: DataTypes.STRING(200),
+        type: DataTypes.STRING(255),
         allowNull: false,
         validate: {
           isIn: [[ROLE.ADMIN, ROLE.USER]],
@@ -67,12 +52,25 @@ export default (sequelize: Sequelize) => {
   );
 
   UserModel.associate = (models) => {
-    (UserModel as any).hasMany(models.Workout, {
+    UserModel.hasMany(models.Exercise, {
+      foreignKey: {
+        name: "createdByUser",
+        allowNull: false,
+      },
+    });
+
+    UserModel.hasMany(models.Workout, {
+      foreignKey: {
+        name: "createdByUser",
+        allowNull: false,
+      },
+    });
+
+    UserModel.hasMany(models.History, {
       foreignKey: {
         name: "userID",
         allowNull: false,
       },
-      as: "translations",
     });
   };
 

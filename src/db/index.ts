@@ -1,5 +1,7 @@
 /* eslint import/no-cycle: 0 */
 
+import * as dotenv from "dotenv";
+dotenv.config();
 import path from "path";
 import fs from "fs";
 import { Sequelize } from "sequelize";

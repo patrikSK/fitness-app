@@ -26,7 +26,14 @@ const getWorkouts = async (_req: Request, res: Response) => {
 
 const createWorkout = async (_req: Request, res: Response) => {
   const id = getIdFromToken(_req.headers.authorization);
+  console.log(id);
 
+  const workout = await Workout.create({
+    name: _req.body.name,
+    days: _req.body.days,
+    userID: id,
+  });
+  /*
   try {
     const workout = await Workout.create({
       name: _req.body.name,
@@ -34,21 +41,16 @@ const createWorkout = async (_req: Request, res: Response) => {
       userID: id,
     });
 
-    for (let i = 0; i < _req.body.days; i++) {
-      await Day.create({
-        day: `day ${i}`,
-        workoutID: workout.id,
-      });
-    }
+    console.log(workout);
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
-      workout: workout,
+      //workout: workout,
       message: "workout was successfully created",
     });
   } catch (err) {
     return res.json({ success: false, error: err });
-  }
+  }*/
 };
 
 const updateWorkout = async (_req: Request, res: Response) => {

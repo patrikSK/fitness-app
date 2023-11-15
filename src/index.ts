@@ -1,5 +1,5 @@
-import * as dotEnv from "dotenv";
-dotEnv.config();
+import * as dotenv from "dotenv";
+dotenv.config();
 import http from "http";
 import express from "express";
 import { sequelize } from "./db";

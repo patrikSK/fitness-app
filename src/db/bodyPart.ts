@@ -30,12 +30,11 @@ export default (sequelize: Sequelize) => {
   );
 
   BodyPartModel.associate = (models) => {
-    (BodyPartModel as any).hasMany(models.Exercise, {
+    BodyPartModel.hasMany(models.Exercise, {
       foreignKey: {
         name: "bodyPartID",
         allowNull: false,
       },
-      as: "translations",
     });
   };
 

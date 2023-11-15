@@ -1,8 +1,9 @@
 /* eslint import/no-cycle: 0 */
 
-import { Sequelize, DataTypes, Model } from "sequelize";
+import { Sequelize, DataTypes } from "sequelize";
 import { DatabaseModel } from "../types/db";
-import { ProgramModel } from "./program";
+import { BodyPartModel } from "./bodyPart";
+import { UserModel } from "./user";
 
 import { EXERCISE_DIFFICULTY } from "../utils/enums";
 
@@ -12,8 +13,10 @@ export class ExerciseModel extends DatabaseModel {
   name: String;
   muscle: String;
   instructions: String;
+  image: Blob;
 
-  program: ProgramModel;
+  createdByUser: UserModel;
+  bodyPartID: BodyPartModel;
 }
 
 export default (sequelize: Sequelize) => {
@@ -29,13 +32,17 @@ export default (sequelize: Sequelize) => {
         type: DataTypes.ENUM(...Object.values(EXERCISE_DIFFICULTY)),
       },
       name: {
-        type: DataTypes.STRING(200),
+        type: DataTypes.STRING(255),
+        allowNull: false,
       },
       muscle: {
-        type: DataTypes.STRING(200),
+        type: DataTypes.STRING(255),
       },
       instructions: {
         type: DataTypes.TEXT,
+      },
+      image: {
+        type: DataTypes.BLOB,
       },
     },
     {
@@ -47,21 +54,17 @@ export default (sequelize: Sequelize) => {
   );
 
   ExerciseModel.associate = (models) => {
-    (ExerciseModel as any).belongsTo(models.Program, {
-      foreignKey: {
-        name: "programID",
-        allowNull: false,
-      },
-    });
-  };
-
-  ExerciseModel.associate = (models) => {
-    (ExerciseModel as any).hasMany(models.WorkoutExercise, {
+    ExerciseModel.hasMany(models.WorkoutExercise, {
       foreignKey: {
         name: "exerciseID",
         allowNull: false,
       },
-      as: "translations",
+    });
+    ExerciseModel.hasMany(models.History, {
+      foreignKey: {
+        name: "exerciseID",
+        allowNull: false,
+      },
     });
   };
 

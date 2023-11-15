@@ -5,8 +5,10 @@ import { DatabaseModel } from "../types/db";
 
 export class DayModel extends DatabaseModel {
   id: Number;
-  name: String;
-  day: String;
+  dayName: String;
+  activityName: String;
+
+  workoutID: Number;
 }
 
 export default (sequelize: Sequelize) => {
@@ -18,13 +20,11 @@ export default (sequelize: Sequelize) => {
         allowNull: false,
         autoIncrement: true,
       },
-      day: {
-        type: DataTypes.STRING(200),
-        allowNull: false,
+      dayName: {
+        type: DataTypes.STRING(255),
       },
-      name: {
-        type: DataTypes.STRING(200),
-        allowNull: true,
+      activityName: {
+        type: DataTypes.STRING(255),
       },
     },
     {
@@ -36,21 +36,11 @@ export default (sequelize: Sequelize) => {
   );
 
   DayModel.associate = (models) => {
-    (DayModel as any).belongsTo(models.Workout, {
-      foreignKey: {
-        name: "workoutID",
-        allowNull: false,
-      },
-    });
-  };
-
-  DayModel.associate = (models) => {
-    (DayModel as any).hasMany(models.WorkoutExercise, {
+    DayModel.hasMany(models.WorkoutExercise, {
       foreignKey: {
         name: "dayID",
         allowNull: false,
       },
-      as: "translations",
     });
   };
 
